@@ -13,6 +13,11 @@ class MainTaxonProcessor implements MainTaxonProcessorInterface
     /** @var \Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface */
     private $taxonRepository;
 
+    public static function getDefaultPriority(): int
+    {
+        return 700;
+    }
+
     public function __construct(TaxonRepositoryInterface $taxonRepository)
     {
         $this->taxonRepository = $taxonRepository;
