@@ -7,7 +7,7 @@ namespace Tests\Synolia\SyliusAkeneoPlugin\PHPUnit\Task\ProductOption;
 use Sylius\Component\Product\Model\ProductOption;
 use Synolia\SyliusAkeneoPlugin\Entity\ApiConfiguration;
 use Synolia\SyliusAkeneoPlugin\Payload\Option\OptionsPayload;
-use Synolia\SyliusAkeneoPlugin\Provider\TaskProvider;
+use Synolia\SyliusAkeneoPlugin\Provider\TaskProviderInterface;
 use Synolia\SyliusAkeneoPlugin\Task\Option\DeleteTask;
 
 /**
@@ -16,14 +16,13 @@ use Synolia\SyliusAkeneoPlugin\Task\Option\DeleteTask;
  */
 final class DeleteTaskTest extends AbstractTaskTest
 {
-    /** @var \Synolia\SyliusAkeneoPlugin\Provider\TaskProvider */
-    private $taskProvider;
+    private TaskProviderInterface $taskProvider;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->taskProvider = $this->getContainer()->get(TaskProvider::class);
+        $this->taskProvider = $this->getContainer()->get(TaskProviderInterface::class);
     }
 
     public function testDeleteOptionTask(): void

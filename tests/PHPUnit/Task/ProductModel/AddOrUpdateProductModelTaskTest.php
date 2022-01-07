@@ -14,7 +14,7 @@ use Synolia\SyliusAkeneoPlugin\Entity\ProductConfigurationImageMapping;
 use Synolia\SyliusAkeneoPlugin\Entity\ProductGroup;
 use Synolia\SyliusAkeneoPlugin\Payload\ProductModel\ProductModelPayload;
 use Synolia\SyliusAkeneoPlugin\Provider\AkeneoAttributePropertiesProvider;
-use Synolia\SyliusAkeneoPlugin\Provider\TaskProvider;
+use Synolia\SyliusAkeneoPlugin\Provider\TaskProviderInterface;
 use Synolia\SyliusAkeneoPlugin\Task\ProductModel\ProcessProductModelsTask;
 use Synolia\SyliusAkeneoPlugin\Task\SetupTask;
 use Synolia\SyliusAkeneoPlugin\Task\TearDownTask;
@@ -25,8 +25,7 @@ use Synolia\SyliusAkeneoPlugin\Task\TearDownTask;
  */
 final class AddOrUpdateProductModelTaskTest extends AbstractTaskTest
 {
-    /** @var AkeneoTaskProvider */
-    private $taskProvider;
+    private TaskProviderInterface $taskProvider;
 
     /** @var ProductRepositoryInterface */
     private $productRepository;
@@ -41,10 +40,10 @@ final class AddOrUpdateProductModelTaskTest extends AbstractTaskTest
         /** @var AkeneoAttributePropertiesProvider $akeneoPropertiesProvider */
         $akeneoPropertiesProvider = $this->getContainer()->get(AkeneoAttributePropertiesProvider::class);
         $akeneoPropertiesProvider->setLoadsAllAttributesAtOnce(true);
-        $this->taskProvider = $this->getContainer()->get(TaskProvider::class);
+        $this->taskProvider = $this->getContainer()->get(TaskProviderInterface::class);
         $this->productRepository = $this->getContainer()->get('sylius.repository.product');
         $this->productGroupRepository = $this->getContainer()->get('akeneo.repository.product_group');
-        self::assertInstanceOf(TaskProvider::class, $this->taskProvider);
+        self::assertInstanceOf(TaskProviderInterface::class, $this->taskProvider);
     }
 
     public function testCreateUpdateTask(): void

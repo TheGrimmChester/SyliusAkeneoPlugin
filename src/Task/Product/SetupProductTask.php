@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Synolia\SyliusAkeneoPlugin\Payload\PipelinePayloadInterface;
 use Synolia\SyliusAkeneoPlugin\Payload\Product\ProductPayload;
 use Synolia\SyliusAkeneoPlugin\Provider\TaskProvider;
+use Synolia\SyliusAkeneoPlugin\Provider\TaskProviderInterface;
 use Synolia\SyliusAkeneoPlugin\Task\AkeneoTaskInterface;
 
 final class SetupProductTask implements AkeneoTaskInterface
@@ -16,7 +17,7 @@ final class SetupProductTask implements AkeneoTaskInterface
 
     private TaskProvider $taskProvider;
 
-    public function __construct(EntityManagerInterface $entityManager, TaskProvider $taskProvider)
+    public function __construct(EntityManagerInterface $entityManager, TaskProviderInterface $taskProvider)
     {
         $this->entityManager = $entityManager;
         $this->taskProvider = $taskProvider;

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Synolia\SyliusAkeneoPlugin\Entity\ApiConfiguration;
 use Synolia\SyliusAkeneoPlugin\Factory\AttributePipelineFactory;
 use Synolia\SyliusAkeneoPlugin\Payload\Attribute\AttributePayload;
-use Synolia\SyliusAkeneoPlugin\Provider\TaskProvider;
+use Synolia\SyliusAkeneoPlugin\Provider\TaskProviderInterface;
 use Synolia\SyliusAkeneoPlugin\Transformer\ProductOptionValueDataTransformerInterface;
 
 /**
@@ -20,14 +20,13 @@ use Synolia\SyliusAkeneoPlugin\Transformer\ProductOptionValueDataTransformerInte
  */
 final class CreateUpdateTaskTest extends AbstractTaskTest
 {
-    /** @var \Synolia\SyliusAkeneoPlugin\Provider\TaskProvider */
-    private $taskProvider;
+    private TaskProviderInterface $taskProvider;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->taskProvider = $this->getContainer()->get(TaskProvider::class);
+        $this->taskProvider = $this->getContainer()->get(TaskProviderInterface::class);
 
         $this->server->setResponseOfPath(
             '/' . sprintf(LocaleApi::LOCALES_URI),

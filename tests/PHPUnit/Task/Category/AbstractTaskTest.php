@@ -9,13 +9,12 @@ use donatj\MockWebServer\Response;
 use donatj\MockWebServer\ResponseStack;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Synolia\SyliusAkeneoPlugin\Entity\CategoryConfiguration;
-use Synolia\SyliusAkeneoPlugin\Provider\TaskProvider;
+use Synolia\SyliusAkeneoPlugin\Provider\TaskProviderInterface;
 use Tests\Synolia\SyliusAkeneoPlugin\PHPUnit\Api\ApiTestCase;
 
 abstract class AbstractTaskTest extends ApiTestCase
 {
-    /** @var \Synolia\SyliusAkeneoPlugin\Provider\TaskProvider */
-    protected $taskProvider;
+    protected TaskProviderInterface $taskProvider;
 
     protected function setUp(): void
     {
@@ -36,7 +35,7 @@ abstract class AbstractTaskTest extends ApiTestCase
             )
         );
 
-        $this->taskProvider = $this->getContainer()->get(TaskProvider::class);
+        $this->taskProvider = $this->getContainer()->get(TaskProviderInterface::class);
     }
 
     protected function tearDown(): void

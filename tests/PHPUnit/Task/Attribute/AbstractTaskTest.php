@@ -12,13 +12,12 @@ use Akeneo\Pim\ApiClient\Api\LocaleApi;
 use Akeneo\PimEnterprise\ApiClient\Api\ReferenceEntityRecordApi;
 use donatj\MockWebServer\Response;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
-use Synolia\SyliusAkeneoPlugin\Provider\TaskProvider;
+use Synolia\SyliusAkeneoPlugin\Provider\TaskProviderInterface;
 use Tests\Synolia\SyliusAkeneoPlugin\PHPUnit\Api\ApiTestCase;
 
 abstract class AbstractTaskTest extends ApiTestCase
 {
-    /** @var \Synolia\SyliusAkeneoPlugin\Provider\TaskProvider */
-    protected $taskProvider;
+    protected TaskProviderInterface $taskProvider;
 
     protected function setUp(): void
     {
@@ -70,7 +69,7 @@ abstract class AbstractTaskTest extends ApiTestCase
             new Response($this->getFileContent('family_clothing_variants.json'), [], HttpResponse::HTTP_OK)
         );
 
-        $this->taskProvider = $this->getContainer()->get(TaskProvider::class);
+        $this->taskProvider = $this->getContainer()->get(TaskProviderInterface::class);
     }
 
     protected function tearDown(): void
