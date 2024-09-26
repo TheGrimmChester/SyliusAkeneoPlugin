@@ -22,7 +22,7 @@ use Synolia\SyliusAkeneoPlugin\Payload\Family\FamilyPayload;
 use Synolia\SyliusAkeneoPlugin\Payload\Product\ProductPayload;
 use Synolia\SyliusAkeneoPlugin\Payload\ProductModel\ProductModelPayload;
 use Synolia\SyliusAkeneoPlugin\Provider\AkeneoAttributePropertiesProvider;
-use Synolia\SyliusAkeneoPlugin\Provider\AkeneoTaskProvider;
+use Synolia\SyliusAkeneoPlugin\Provider\TaskProviderInterface;
 use Synolia\SyliusAkeneoPlugin\Task\Product\ProcessProductsTask;
 use Synolia\SyliusAkeneoPlugin\Task\Product\SetupProductTask;
 use Synolia\SyliusAkeneoPlugin\Task\Product\TearDownProductTask;
@@ -33,11 +33,10 @@ use Synolia\SyliusAkeneoPlugin\Task\Product\TearDownProductTask;
  */
 final class CreateConfigurableProductEntitiesTaskTest extends AbstractTaskTest
 {
-    /** @var AkeneoTaskProvider */
-    private $taskProvider;
+    private TaskProviderInterface $taskProvider;
 
     /** @var \Akeneo\Pim\ApiClient\AkeneoPimClientInterface */
-    private $client;
+    private AkeneoPimEnterpriseClientInterface $client;
 
     protected function setUp(): void
     {
@@ -46,9 +45,9 @@ final class CreateConfigurableProductEntitiesTaskTest extends AbstractTaskTest
         /** @var AkeneoAttributePropertiesProvider $akeneoPropertiesProvider */
         $akeneoPropertiesProvider = $this->getContainer()->get(AkeneoAttributePropertiesProvider::class);
         $akeneoPropertiesProvider->setLoadsAllAttributesAtOnce(true);
-        $this->taskProvider = $this->getContainer()->get(AkeneoTaskProvider::class);
+        $this->taskProvider = $this->getContainer()->get(TaskProviderInterface::class);
         $this->client = $this->createClient();
-        self::assertInstanceOf(AkeneoTaskProvider::class, $this->taskProvider);
+        self::assertInstanceOf(TaskProviderInterface::class, $this->taskProvider);
     }
 
     public function testCreateConfigurableProductsTask(): void

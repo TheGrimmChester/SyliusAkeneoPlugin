@@ -7,6 +7,7 @@ namespace Tests\Synolia\SyliusAkeneoPlugin\PHPUnit\Task\Product;
 use Akeneo\Pim\ApiClient\Api\AttributeApi;
 use Akeneo\Pim\ApiClient\Api\LocaleApi;
 use Akeneo\Pim\ApiClient\Api\ProductApi;
+use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface;
 use Akeneo\PimEnterprise\ApiClient\Api\ReferenceEntityAttributeApi;
 use Akeneo\PimEnterprise\ApiClient\Api\ReferenceEntityAttributeOptionApi;
 use Akeneo\PimEnterprise\ApiClient\Api\ReferenceEntityRecordApi;
@@ -17,7 +18,7 @@ use Sylius\Component\Core\Model\TaxonInterface;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Synolia\SyliusAkeneoPlugin\Payload\Product\ProductPayload;
 use Synolia\SyliusAkeneoPlugin\Provider\AkeneoAttributePropertiesProvider;
-use Synolia\SyliusAkeneoPlugin\Provider\AkeneoTaskProvider;
+use Synolia\SyliusAkeneoPlugin\Provider\TaskProviderInterface;
 use Synolia\SyliusAkeneoPlugin\Repository\ProductAttributeRepository;
 use Synolia\SyliusAkeneoPlugin\Task\Product\ProcessProductsTask;
 use Synolia\SyliusAkeneoPlugin\Task\Product\SetupProductTask;
@@ -29,11 +30,9 @@ use Synolia\SyliusAkeneoPlugin\Task\Product\TearDownProductTask;
  */
 final class CreateSimpleProductEntitiesTaskTest extends AbstractTaskTest
 {
-    /** @var AkeneoTaskProvider */
-    private $taskProvider;
+    private TaskProviderInterface $taskProvider;
 
-    /** @var \Akeneo\Pim\ApiClient\AkeneoPimClientInterface */
-    private $client;
+    private AkeneoPimEnterpriseClientInterface $client;
 
     protected function setUp(): void
     {
@@ -41,9 +40,9 @@ final class CreateSimpleProductEntitiesTaskTest extends AbstractTaskTest
 
         $akeneoPropertiesProvider = $this->getContainer()->get(AkeneoAttributePropertiesProvider::class);
         $akeneoPropertiesProvider->setLoadsAllAttributesAtOnce(true);
-        $this->taskProvider = $this->getContainer()->get(AkeneoTaskProvider::class);
+        $this->taskProvider = $this->getContainer()->get(TaskProviderInterface::class);
         $this->client = $this->createClient();
-        self::assertInstanceOf(AkeneoTaskProvider::class, $this->taskProvider);
+        self::assertInstanceOf(TaskProviderInterface::class, $this->taskProvider);
     }
 
     public function testRetrieveProductsTask(): void
